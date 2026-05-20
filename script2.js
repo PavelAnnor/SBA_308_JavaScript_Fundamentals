@@ -121,7 +121,7 @@ const LearnerSubmissions = [
 //                                                                                !!!HELPER FUNCTIONS!!!
 
 /*
-VALIDATES PTS POSSIBLE FOR AN ARRAY OF ASSIGNMENTS AND CHECKS IF ANY ARE LESS THAN 0 (returns boolean)
+VALIDATES PTS POSSIBLE FOR AN ARRAY OF ASSIGNMENTS AND CHECKS IF ANY ARE LESS THAN 0 (UPDATES THEM TO 100 AS DEFAULT IF NEEDED)
 Paramaters: assignment group, a course info object
 Status: COMPLETED
 */
