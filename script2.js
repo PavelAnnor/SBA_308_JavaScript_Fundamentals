@@ -184,6 +184,11 @@ Status: 50%, validates lateness correctly, not a submission is correlates to an 
 function validateAssignmentSubmissionDate(submissionsArray, assignmentGroup){ 
     //iterate through submissionsArray 
     for(let submitted of submissionsArray ){
+
+        //turn scores into numbers if they arent to avoid erros with calculations
+        submitted.submission.score = Number( submitted.submission.score)
+
+
         //deducts 10 pts from late assignmentd 
         //find me the assignment that corresponds and grab me its due date 
         let duedate = findAssignment(submitted.assignment_id,assignmentGroup).due_at   //have to call .due_at since find returns the whole object 
@@ -343,6 +348,7 @@ function getLearnerData(course, ag, submissionsArray) {
       console.log(`\nResults`);
       return result;
     } 
+    
     else{
       console.log(
         "Unable to process data. Refer to the information above on how to proceed. Then run querey again.",
