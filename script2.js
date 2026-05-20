@@ -321,7 +321,7 @@ function getLearnerData(course, ag, submissionsArray) {
 
       for (let learner of learners) {
         let obj = {};
-        //setting the ID property submissionsArray[]
+        //setting the ID property 
         obj.id = learner;
         console.log(`\nLearner: ${learner} completed: `);
         //give me an array of the work they completed
@@ -337,7 +337,6 @@ function getLearnerData(course, ag, submissionsArray) {
 
         //getting the avarge
         obj["avg"] = getLearnerWeightedAverage(learner, submissionsArray, ag);
-
         result.push(obj);
       }
 
