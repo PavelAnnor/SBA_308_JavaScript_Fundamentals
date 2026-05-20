@@ -175,6 +175,27 @@ function validateAssignmentGroup(ag,course){
     return valid; 
 }
 
+
+/*
+VALIDATES THE SUBMISSIONS OBJECTS IN A SUBMISSIONS ARRAY, CHECKS IF THEY ARE LATE (DEDUCTS 10 PTS IF TRUE) (NULL)
+Paramaters: array of submission objects (ex: LearnerSubmissions), assignmentGroup
+Status: 50%, validates lateness correctly, not a submission is correlates to an existeing assingment
+*/
+function validateAssignmentSubmissionDate(submissionsArray, assignmentGroup){ 
+    //iterate through submissionsArray 
+    for(let submitted of submissionsArray ){
+        //deducts 10 pts from late assignmentd 
+        //find me the assignment that corresponds and grab me its due date 
+        let duedate = findAssignment(submitted.assignment_id,assignmentGroup).due_at   //have to call .due_at since find returns the whole object 
+
+        //if due date passed already, deduct 10% of max possible pts
+        if(duedate<submitted.submission.submitted_at){
+           submitted.submission.score -= getAssignmentPtsPossible(submitted.assignment_id,assignmentGroup)*0.1
+        }     
+    }
+    return null;
+}
+
 /*
 RETURNS AN ARRAY WITH UNIQUE LEARNER IDS (ARRAY [])
 Paramaters: array of submission objects (ex: LearnerSubmissions)
@@ -211,44 +232,6 @@ function getCompletedAssignmentsIDArray(learner_id,submissionArray){
 
 
 /*
-VALIDATES THE SUBMISSIONS OBJECTS IN A SUBMISSIONS ARRAY, CHECKS IF THEY ARE LATE (DEDUCTS 10 PTS IF TRUE) (NULL)
-Paramaters: array of submission objects (ex: LearnerSubmissions), assignmentGroup
-Status: 50%, validates lateness correctly, not a submission is correlates to an existeing assingment
-*/
-function validateAssignmentSubmissionDate(submissionsArray, assignmentGroup){ 
-    //iterate through submissionsArray 
-    for(let submitted of submissionsArray ){
-        //deducts 10 pts from late assignmentd 
-        //find me the assignment that corresponds and grab me its due date 
-        let duedate = findAssignment(submitted.assignment_id,assignmentGroup).due_at   //have to call .due_at since find returns the whole object 
-
-        //if due date passed already, deduct 10% of max possible pts
-        if(duedate<submitted.submission.submitted_at){
-           submitted.submission.score -= getAssignmentPtsPossible(submitted.assignment_id,assignmentGroup)*0.1
-        }     
-    }
-    return null;
-}
-
-/*
-RETURNS WHAT A LEARNER SCORED ON AN ASSIGNMENT (NUMBER)
-Paramaters: learner_id, assignment_id, array of submission objects (ex: LearnerSubmissions)
-Status: Completed
-*/
-function getAssignmentScore(learner_id,assignment_id,submissionArray){
-    return findLearnerSubmission(learner_id,assignment_id,submissionArray).submission.score  
-}
-
-/*
-RETURNS THE POINTS POSSIBLE FOR AN ASSIGMENTS (NUMBER)
-Paramaters: learner_id, assignment_id, array of submission objects (ex: LearnerSubmissions)
-Status: Completed
-*/
-function getAssignmentPtsPossible(assignment_id,assignmentGroup){
-    return findAssignment(assignment_id,assignmentGroup).points_possible   
-}
-
-/*
 RETURNS THE A PARTICULAR LEARNER SUBMISSION OBJECT GIVEN THE LEARNER ID AND ASSIGNMENT ID (OBJECT)
 Paramaters: learner_id, assignment_id, array of submission objects (ex: LearnerSubmissions)
 Status: Completed
@@ -270,6 +253,24 @@ function findAssignment(assignment_id, assignmentGroup){
        (element)=> element.id === assignment_id 
     );
     return assignment
+}
+
+/*
+RETURNS WHAT A LEARNER SCORED ON AN ASSIGNMENT (NUMBER)
+Paramaters: learner_id, assignment_id, array of submission objects (ex: LearnerSubmissions)
+Status: Completed
+*/
+function getAssignmentScore(learner_id,assignment_id,submissionArray){
+    return findLearnerSubmission(learner_id,assignment_id,submissionArray).submission.score  
+}
+
+/*
+RETURNS THE POINTS POSSIBLE FOR AN ASSIGMENTS (NUMBER)
+Paramaters: learner_id, assignment_id, array of submission objects (ex: LearnerSubmissions)
+Status: Completed
+*/
+function getAssignmentPtsPossible(assignment_id,assignmentGroup){
+    return findAssignment(assignment_id,assignmentGroup).points_possible   
 }
 
 /*
