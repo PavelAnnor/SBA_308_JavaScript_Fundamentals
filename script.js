@@ -12,6 +12,9 @@ const CourseInfo = {
 
 
 
+
+
+
 /*
 ASSIGNMENT GROUP OBJECT (Assigment Groups for a particular course)
 {
@@ -57,9 +60,12 @@ const AssignmentGroup = {
       name: "Code the World",
       due_at: "3156-11-15",
       points_possible: 500
-    }
+    },
+    
   ]
 };
+
+
 
 //An array of LearnerSubmission objects
 const LearnerSubmissions = [
@@ -124,13 +130,18 @@ LEARNER SUBMISSION OBJECT (When the learner submits assigments)
     }
   },
 
+   
+
 
 ];
 
 
-//Helper Functions 
-//returns an array with unique learner ids
-function getUniqueLearnersIDs(submissionsArr){
+
+
+//HELPER FUNCTIONS
+
+//returns an array with unique learner ids (COMPLETED)
+function getUniqueLearnersIDsArray(submissionsArr){
     let x = [];
     for(submission of submissionsArr){
         if(x.indexOf(submission.learner_id)===-1)
@@ -157,7 +168,7 @@ function getAssignmentScore(student, assigmentNumber, submissions){
             ptsPossible =assigment.points_possible
     }
 
-    return score/ptsPossible
+    return Number((score/ptsPossible).toFixed(3))
 
 }
 
@@ -167,18 +178,64 @@ function getCompletedAssignments(student,submissions){
     let x = []
     //iterte through submissions array 
     for(let submitted of submissions ){
-        if(submitted.learner_id === student)
+        if((submitted.learner_id === student) ){
             x.push(submitted.assignment_id)
+            }
     }
     return x
 
 }
 
+function validateAssignmentSubmissionDate(submissions){
+    //iterate throgh all student submissions 
+    for (let submitted of submissions){
+        let currentAssignmentDueDate =0
+        currentAssignmentDueDate =  (AssignmentGroup.assignments).find(  
+            (element)=> {
+
+                if(element.due_at === '3156-11-15')
+                    return (element.due_at)
+            } 
+            
+            );
+        console.log(currentAssignmentDueDate)
+        // if( (submitted.submission) > AssignmentGroup.assignments[submitted.assignment_id].due_at)
+        //     submitted.score-=10
+        // console.log(submitted.submission.submitted_at )
+
+    }
+
+}
+
+// validateAssignmentSubmissionDate(LearnerSubmissions)
+console.log(
+    
+    AssignmentGroup.assignments.find(
+        (assignment)=> {
+
+            if(assignment.due_at === '3156-11-15')
+                return assignment.due_at
+    
+    
+    }
+    
+    )
+
+
+
+)
+
+
+
+
+
 // here, we would process this data to achieve the desired result.
 function getLearnerData(course, ag, submissions) {
+
+    // validateAssignmentSubmissionDate(submissions);
     let results = [];
    
-   let uniqueIDs = getUniqueLearnersIDs(submissions); //get the unique student IDs (Dictates how many objects we weill ultimatley need to return )
+   let uniqueIDs = getUniqueLearnersIDsArray(submissions); //get the unique student IDs (Dictates how many objects we weill ultimatley need to return )
 
    console.log("Our Unique Ids:")
    console.log(uniqueIDs);
