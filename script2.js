@@ -125,7 +125,7 @@ VALIDATES PTS POSSIBLE FOR AN ARRAY OF ASSIGNMENTS AND CHECKS IF ANY ARE LESS TH
 Paramaters: assignment group, a course info object
 Status: COMPLETED
 */
-function validateAssignmentPtsPossible(ag,course){
+function validateAssignmentPtsPossible(ag){
      //check if any of the points possible are 0
     for (let index in ag.assignments){
 
@@ -310,7 +310,7 @@ function getLearnerData(course, ag, submissionsArray) {
       //validate the submissions (check for lateness)
       validateAssignmentSubmissionDate(LearnerSubmissions, AssignmentGroup);
       //validate the pts possible and adjust if neceassry
-      validateAssignmentPtsPossible(ag,course);
+      validateAssignmentPtsPossible(ag);
       const result = [];
 
       //get me a list of the unique learner ids, dictates how many objects in our return array.
